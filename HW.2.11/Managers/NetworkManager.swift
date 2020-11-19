@@ -25,69 +25,67 @@ class NetworkManager {
     
     private init() {}
     
-    
-    
-    
-    
     func fetchData(from urlString: String, with complition: @escaping (Response?) -> Void) {
         
-//        func fetchCharacters(from url:String) {
-            AF.request(urlString)
-                .validate()
-                .responseJSON { dataResponse in
-                    switch dataResponse.result {
-                    case .success(let value):
-//                        self.characters = Response.getResponse(from: value)
-                        let response = Response.getResponse(from: value)
-                        DispatchQueue.main.async {
-//                            self.tableView.reloadData()
-                            complition(response)
-                        }
-                        
-                    case .failure(let error):
-                        print(error)
+        AF.request(urlString)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let response = Response.getResponse(from: value)
+                    DispatchQueue.main.async {
+                        complition(response)
                     }
+                    
+                case .failure(let error):
+                    print(error)
                 }
-//        }
-        
-        
-        
-        /*
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
-            if let error = error {
-                print(error)
-                return
             }
-            guard let data = data else { return }
-            
-            do {
-                let character = try JSONDecoder().decode(Character.self, from: data)
-                DispatchQueue.main.async {
-                    complition(character)
-                }
-            } catch let jsonError {
-                print(jsonError.localizedDescription)
-            }
-            
-        }.resume()
-        
-        */
-        
-        
+    }
+    
+}
+
+
+class ImageManager {
+    static var shared = ImageManager()
+    
+    private init() {}
+    
+    func fetchImage(from url: String?) -> Data? {
+        guard let stringURL = url else { return nil }
+        guard let imageURL = URL(string: stringURL) else { return nil }
+        return try? Data(contentsOf: imageURL)
     }
 }
 
 
 
-
-
-
-
+/*
 class ImageManager {
     static let shared = ImageManager()
     private init() {}
+    
+    
+    func fetchData(from urlString: String, with complition: @escaping (Response?) -> Void) {
+        
+        AF.request(urlString)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let response = Response.getResponse(from: value)
+                    DispatchQueue.main.async {
+                        complition(response)
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+    }
+    
+    
+    /*
     
     //не смог понять в чем проблема
     func fetchImage(url: String) -> Data? {
@@ -103,9 +101,9 @@ class ImageManager {
         }
         return result
     }
-    
+    */
 }
 
 
 
-
+ */

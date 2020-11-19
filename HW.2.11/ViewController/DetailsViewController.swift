@@ -46,37 +46,18 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    /*
-     // не смог заставить это работать
-    private func fetchImage() {
+    
+     private func fetchImage() {
+        
         
         DispatchQueue.global().async {
-            guard let data = ImageManager.shared.fetchImage(url: self.characterInfo.image) else { return }
-            
+            guard let imageData = ImageManager.shared.fetchImage(from: self.characterInfo.image) else { return }
             DispatchQueue.main.async {
-                self.characterPhoto.image = UIImage(data: data)
+                self.characterPhoto.image = UIImage(data: imageData)
                 self.activityIndicator.stopAnimating()
             }
         }
-    }
-     */
-    
-     private func fetchImage() {
-        guard let url = URL(string: characterInfo.image ) else { return }
-         URLSession.shared.dataTask(with: url) { (data, _, error) in
-             if let error = error {
-                 print(error)
-                 return
-             }
-             
-             if let data = data, let image = UIImage(data: data) {
-                 DispatchQueue.main.async {
-                     self.characterPhoto.image = image
-                     self.activityIndicator.stopAnimating()
-                 }
-             }
-             
-         }.resume()
+        
      }
     
 }
