@@ -35,13 +35,13 @@ class DetailsViewController: UIViewController {
         infoLabels.forEach { (label) in
 
             switch label.tag {
-            case 0: label.text = "Status: \(characterInfo.status )"
-            case 1: label.text = "Species: \(characterInfo.species )"
-            case 2: label.text = "Type: \(characterInfo.type )"
-            case 3: label.text = "Gender: \(characterInfo.gender )"
-            case 4: label.text = "Origin location:\n\(characterInfo.origin.name )"
+            case 0: label.text = "Status: \(characterInfo.status ?? "" )"
+            case 1: label.text = "Species: \(characterInfo.species ?? "" )"
+            case 2: label.text = "Type: \(characterInfo.type ?? "" )"
+            case 3: label.text = "Gender: \(characterInfo.gender ?? "" )"
+            case 4: label.text = "Origin location:\n\(String(describing: characterInfo.origin?.name) )"
             default: label.text =
-                "Last known location endpoint:\n\(characterInfo.location.name )"
+                "Last known location endpoint:\n\(characterInfo.location?.name ?? "" )"
             }
         }
     }

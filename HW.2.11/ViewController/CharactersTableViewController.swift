@@ -22,14 +22,14 @@ class CharactersTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        characters?.results.count ?? 0
+        characters?.results?.count ?? 0
 
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "character", for: indexPath) as! CharacterTableViewCell
 
-        let person = (characters?.results[indexPath.row])!
+        let person = (characters?.results?[indexPath.row])!
         cell.configure(with: person)
         return cell
     }
@@ -48,7 +48,7 @@ class CharactersTableViewController: UITableViewController {
         let detailsVC = segue.destination as! DetailsViewController
         guard let indexPath = tableView.indexPathForSelectedRow else
         { return }
-        detailsVC.characterInfo = characters?.results[indexPath.row]
+        detailsVC.characterInfo = characters?.results?[indexPath.row]
     }
     
 }
