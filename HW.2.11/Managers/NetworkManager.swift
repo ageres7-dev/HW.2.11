@@ -20,7 +20,6 @@ enum StatusCharacter: String {
 
 
 class NetworkManager {
-    
     static let shared = NetworkManager()
     
     private init() {}

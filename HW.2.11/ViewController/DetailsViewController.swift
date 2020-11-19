@@ -56,7 +56,6 @@ class DetailsViewController: UIViewController {
                 self.activityIndicator.stopAnimating()
             }
         }
-        
      }
     
 }
