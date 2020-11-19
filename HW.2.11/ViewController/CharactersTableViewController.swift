@@ -11,7 +11,7 @@ import UIKit
 
 class CharactersTableViewController: UITableViewController {
     
-    private var characters = Character(results: [])
+    private var characters: Response?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +24,14 @@ class CharactersTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        characters.results.count
+        characters?.results.count ?? 0
 
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "character", for: indexPath) as! CharacterTableViewCell
-
-        let person = characters.results[indexPath.row]
+// переделать
+        let person = (characters?.results[indexPath.row])!
         cell.configure(with: person)
         return cell
     }
@@ -50,16 +50,84 @@ class CharactersTableViewController: UITableViewController {
         let detailsVC = segue.destination as! DetailsViewController
         guard let indexPath = tableView.indexPathForSelectedRow else
         { return }
-        detailsVC.characterInfo = characters.results[indexPath.row]
+        detailsVC.characterInfo = characters?.results[indexPath.row]
     }
     
 }
 
 
 extension CharactersTableViewController {
-  
+   
+    func fetchCharacters(from url:String) {
+        NetworkManager.shared.fetchData(from: url) { response in
+            self.characters = response
+            self.tableView.reloadData()
+        }
+    }
+    
+  /*
+    func fetchCharacters(from url:String) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    self.characters = Response.getResponse(from: value)
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+    }
+    */
+    
+}
+    
+    
+    
+    /*
+    
     private func fetchCharacters(from url:String) {
-        guard let url = URL(string: url) else { return }
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                
+                case .success(let value):
+                    
+                
+                    
+    
+                    
+//                   let tet = Info.getResult(from: value)!
+//                    print(tet)
+                    
+                    
+//                    guard let value = value as? [String: Any] else { return }
+//                    guard let info = value["info"] as? [String: Any] else { return }
+//                    print(info)
+                    
+                  
+//                    print(Character.getResult(from: value)!)
+//                    self.characters = Character.getResult(from: value)!
+//                        ?? Character(results: [])
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        
+        */
+        
+        
+        
+        /*
         URLSession.shared.dataTask(with: url) { [self] (data, _, error) in
             
             if let error = error {
@@ -77,7 +145,7 @@ extension CharactersTableViewController {
             }
             
         }.resume()
-        
-    }
+        */
+
     
-}
+

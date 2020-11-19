@@ -9,7 +9,7 @@ import UIKit
 
 class CharacterTableViewCell: UITableViewCell {
     
-    func configure(with character: Results) {
+    func configure(with character: Result) {
         let selectedColor = UIView()
         selectedColor.backgroundColor = .systemGreen
         selectedBackgroundView = selectedColor
@@ -24,7 +24,7 @@ class CharacterTableViewCell: UITableViewCell {
         
         DispatchQueue.global().async {
             let stringURL = character.image
-            guard let imageURL = URL(string: stringURL) else { return }
+            guard let imageURL = URL(string: stringURL ) else { return }
             guard let imageData = try? Data(contentsOf: imageURL) else { return }
             
             DispatchQueue.main.async {

@@ -13,7 +13,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var infoLabels: [UILabel]!
     
-    var characterInfo: Results!
+    var characterInfo: Result!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +35,13 @@ class DetailsViewController: UIViewController {
         infoLabels.forEach { (label) in
 
             switch label.tag {
-            case 0: label.text = "Status: \(characterInfo.status)"
-            case 1: label.text = "Species: \(characterInfo.species)"
-            case 2: label.text = "Type: \(characterInfo.type)"
-            case 3: label.text = "Gender: \(characterInfo.gender)"
-            case 4: label.text = "Origin location:\n\(characterInfo.origin.name)"
+            case 0: label.text = "Status: \(characterInfo.status )"
+            case 1: label.text = "Species: \(characterInfo.species )"
+            case 2: label.text = "Type: \(characterInfo.type )"
+            case 3: label.text = "Gender: \(characterInfo.gender )"
+            case 4: label.text = "Origin location:\n\(characterInfo.origin.name )"
             default: label.text =
-                "Last known location endpoint:\n\(characterInfo.location.name)"
+                "Last known location endpoint:\n\(characterInfo.location.name )"
             }
         }
     }
@@ -62,7 +62,7 @@ class DetailsViewController: UIViewController {
      */
     
      private func fetchImage() {
-         guard let url = URL(string: characterInfo.image) else { return }
+        guard let url = URL(string: characterInfo.image ) else { return }
          URLSession.shared.dataTask(with: url) { (data, _, error) in
              if let error = error {
                  print(error)
