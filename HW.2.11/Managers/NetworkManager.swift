@@ -14,11 +14,6 @@ enum StatusCharacter: String {
     case unknown =  "https://rickandmortyapi.com/api/character/?status=unknown"
 }
 
-
-
-
-
-
 class NetworkManager {
     static let shared = NetworkManager()
     
@@ -50,9 +45,40 @@ class ImageManager {
     
     private init() {}
     
-    func fetchImage(from url: String?) -> Data? {
-        guard let stringURL = url else { return nil }
-        guard let imageURL = URL(string: stringURL) else { return nil }
-        return try? Data(contentsOf: imageURL)
+    func fetchImage(from url: String, with complition: @escaping (UIImage?) -> Void) {
+//        print(url)
+         AF.request(url)
+            .validate()
+            .response { dataResponse in
+                switch dataResponse.result {
+                
+                case .success(let value):
+                    let image = UIImage(data: value!)
+                    DispatchQueue.main.async{
+                        complition(image)
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+        }
+//
+//        guard let stringURL = url else { return nil }
+//        guard let imageURL = URL(string: stringURL) else { return nil }
+//        return try? Data(contentsOf: imageURL)
     }
 }
+
+/*
+ class ImageManager {
+     static var shared = ImageManager()
+     
+     private init() {}
+     
+     func fetchImage(from url: String?) -> Data? {
+         guard let stringURL = url else { return nil }
+         guard let imageURL = URL(string: stringURL) else { return nil }
+         return try? Data(contentsOf: imageURL)
+     }
+ }
+ */

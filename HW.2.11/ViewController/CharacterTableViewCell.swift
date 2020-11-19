@@ -22,15 +22,23 @@ class CharacterTableViewCell: UITableViewCell {
         content.imageProperties.maximumSize = CGSize(width: 40, height: 40)
         content.image = UIImage(named: "default")
         
+        ImageManager.shared.fetchImage(from: character.image ?? "") { image in
+            content.image = image
+            self.contentConfiguration = content
+        }
+        
+        /*
         DispatchQueue.global().async {
-            guard let imageData = ImageManager.shared.fetchImage(from: character.image) else { return }
+            guard let imageData = ImageManager.shared.fetchImage(from: character.image ?? "") else { return }
             
             DispatchQueue.main.async {
                 content.image = UIImage(data: imageData)
                 self.contentConfiguration = content
             }
-            
         }
+        */
+        
+        
         contentConfiguration = content
     }
 }

@@ -49,13 +49,21 @@ class DetailsViewController: UIViewController {
     
      private func fetchImage() {
         
+        ImageManager.shared.fetchImage(from: self.characterInfo.image ?? "") { image in
+            self.characterPhoto.image = image
+            self.activityIndicator.stopAnimating()
+        }
+        
+        /*
         DispatchQueue.global().async {
-            guard let imageData = ImageManager.shared.fetchImage(from: self.characterInfo.image) else { return }
+            guard let imageData = ImageManager.shared.fetchImage(from: self.characterInfo.image ?? "") else { return }
+            
             DispatchQueue.main.async {
                 self.characterPhoto.image = UIImage(data: imageData)
                 self.activityIndicator.stopAnimating()
             }
         }
+        */
      }
     
 }
