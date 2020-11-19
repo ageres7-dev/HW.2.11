@@ -49,7 +49,6 @@ class DetailsViewController: UIViewController {
     
      private func fetchImage() {
         
-        
         DispatchQueue.global().async {
             guard let imageData = ImageManager.shared.fetchImage(from: self.characterInfo.image) else { return }
             DispatchQueue.main.async {
